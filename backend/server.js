@@ -4,6 +4,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const userRouter = require('./routes/userRoutes');
+const productRouter = require('./routes/productRoutes');
+
+
 // Initialize app 
 const app = express();
 
@@ -15,7 +19,9 @@ app.use(express.urlencoded({extended:true}));
 const PORT = process.env.PORT || 3001;
 
 
-
+// Routes 
+app.use('/api/users',userRouter);
+app.use('/api/products',productRouter);
 
 
 

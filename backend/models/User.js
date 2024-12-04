@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const SALT_ROUNDS = 10;
+
 const userSchema = new mongoose.Schema({
 name: { type: String, required: true},
 email: { type: String, required: true, unique:true, trim: true, lowercase: true},
@@ -17,8 +19,8 @@ isAdmin: {type: Boolean, default: false}
 });
 
 // (middleware) to save operation to hash the user's password before it is saved to the database.
-userSchema.pre('save', async (next)=>{
-if(!this.Modified('password')) return next();
+userSchema.pre('save', async function(next){
+if(!this.isModified('password')) return next();
 // update password with computed hash
 this.password = await bcrypt.hash(this.password,SALT_ROUNDS)
 })
