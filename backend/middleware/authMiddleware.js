@@ -20,6 +20,7 @@ if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
 }
 };
 
+// Admin-only access
 const admin = async (req, res, next)=>{
 if(req.user && req.user.isAdmin){
     next();
