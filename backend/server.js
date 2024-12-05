@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const userRouter = require('./routes/userRoutes');
 const productRouter = require('./routes/productRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 
 // Initialize app 
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 3001;
 // Routes 
 app.use('/api/users',userRouter);
 app.use('/api/products',productRouter);
+app.use('/api/orders',orderRouter);
 
 
 

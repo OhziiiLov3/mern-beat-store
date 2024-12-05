@@ -37,7 +37,7 @@ const addProduct = async (req, res) => {
     availability,
     owner,
   } = req.body;
-
+  console.log("Request Body:", req.body);
   try {
     const product = await Product.create({
       name,
