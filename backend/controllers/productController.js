@@ -72,7 +72,7 @@ const getProductById = async (req, res) => {
   }
 };
 
-
+// Update product by id
 const updateProduct = async  (req, res)=>{
  try {
     const {id} = req.params;
@@ -88,9 +88,25 @@ const updateProduct = async  (req, res)=>{
  }
 };
 
+// Delete product by id
+const deleteProduct = async (req, res)=>{
+try {
+    const {id} = req.params;
+    const product = await Product.findByIdAndDelete(id);
+    if(product){
+        res.json({ message: 'Product deleted successfully' });
+    }else{
+        res.status(404).json({ message: 'Product not found' });
+    }
+} catch (error) {
+    res.status(500).json({ message: error.message });
+}
+};
+
 module.exports = {
   getProducts,
   addProduct,
   getProductById,
   updateProduct,
+  deleteProduct,
 };
