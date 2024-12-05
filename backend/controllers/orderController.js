@@ -44,11 +44,20 @@ const createOrder = async (req, res) => {
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
   } catch (error) {
-    console.error("Error creating order:", error);
     res.status(400).json({ message: error.message });
   }
 };
 
+const getOrders = async (req,res)=>{
+try {
+    const orders = await Order.find({user: req.user._id}).populate('items.product', 'name price').sort({createdAt: -1});
+    res.json(orders)
+} catch (error) {
+    res.status(400).json({ message: error.message });
+}
+};
+
 module.exports = {
   createOrder,
+  getOrders
 };
