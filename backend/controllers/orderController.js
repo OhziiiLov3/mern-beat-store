@@ -1,6 +1,8 @@
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 
+
+//  create an order 
 const createOrder = async (req, res) => {
     console.log("Create order route hit");
   try {
@@ -48,6 +50,7 @@ const createOrder = async (req, res) => {
   }
 };
 
+// Get all orders
 const getOrders = async (req,res)=>{
 try {
     const orders = await Order.find({user: req.user._id}).populate('items.product', 'name price').sort({createdAt: -1});
@@ -57,7 +60,27 @@ try {
 }
 };
 
+//  update order status- admin only 
+const updateOrderStatus = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+  
+      const order = await Order.findById(id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+  
+      order.status = status;
+      const updatedOrder = await order.save();
+  
+      res.json(updatedOrder);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 module.exports = {
   createOrder,
-  getOrders
+  getOrders,
+  updateOrderStatus
 };
