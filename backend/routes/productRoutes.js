@@ -1,5 +1,5 @@
 const express = require('express');
-const { getProducts, addProduct, getProductById } = require('../controllers/productController');
+const { getProducts, addProduct, getProductById, updateProduct } = require('../controllers/productController');
 const {protect, admin} = require('../middleware/authMiddleware');
 const router = express.Router();
 
@@ -13,5 +13,7 @@ router.get('/', getProducts);
 router.post('/', protect, admin, addProduct);
 // GET -> /api/products/:id
 router.get('/:id', getProductById);
+// PUT -> /api/products/:id
+router.put('/:id', updateProduct, protect, admin);
 
 module.exports = router;

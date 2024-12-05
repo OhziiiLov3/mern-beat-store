@@ -1,3 +1,4 @@
+const { trusted } = require("mongoose");
 const Product = require("../models/Product");
 
 // Get all products
@@ -60,7 +61,7 @@ const addProduct = async (req, res) => {
 // Get a single product(by id)
 const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('owner', 'name email');
     if (product) {
       res.json(product);
     } else {
@@ -71,8 +72,25 @@ const getProductById = async (req, res) => {
   }
 };
 
+
+const updateProduct = async  (req, res)=>{
+ try {
+    const {id} = req.params;
+    const updates = req.body;
+    const product = await Product.findByIdAndUpdate(id, updates,{new :true});
+    if(product){
+        res.json(product)
+    }else{
+        res.status(404).json({ message: 'Product not found' });
+    }
+ } catch (error) {
+    res.status(500).json({ message: error.message });
+ }
+};
+
 module.exports = {
   getProducts,
   addProduct,
   getProductById,
+  updateProduct,
 };
