@@ -4,11 +4,20 @@ const productSchema = new mongoose.Schema({
 name: {type: String, required: true},
 category: { type: String, enum: ['beat','merch'], required:true},
 description: String,
-price: {type: String, required: true},
+price: {type: Number, required: true},
 image: String,
 file: String,
-stock: {type: Number, default: 0}
-
+stock: {type: Number, default: 0},
+tags: {type:[String], default : []},
+isPremium: {type: Boolean, default: false},
+owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+availability: { 
+    type: String, 
+    enum: ['available', 'basic-only', 'premium-only'], 
+    default: 'available' 
+  },
+},{
+    timestamps: true,
 });
 
 module.exports = mongoose.model('Product', productSchema);

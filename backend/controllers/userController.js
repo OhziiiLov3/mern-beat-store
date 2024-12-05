@@ -74,7 +74,7 @@ const getUserProfile = async (req, res)=>{
 
 
 module.exports = {
- registerUser: registerUser,
- loginUser: loginUser,
- getUserProfile: getUserProfile
+ registerUser,
+ loginUser,
+ getUserProfile
 }
